@@ -10,6 +10,9 @@ namespace Modul6_103022400109
         private int playCount;
         public SayaMusicTrack(string title)
         {
+            Debug.Assert(title != null, "Precondition gagal: Judul lagu tidak boleh null");
+            Debug.Assert(title.Length <= 100 "Precondition gagal: Judul lagu maksimal 100 karakter");
+            
             this.title = title;
             this.playCount = 0;
 
@@ -18,7 +21,18 @@ namespace Modul6_103022400109
         }
         public void IncreasePlayCount(int count)
         {
-            this.playCount += count;
+            Debug.Assert(count <= 1000000, "Precondition gagal: playcount maksimal 1.000.000");
+            try
+            {
+                checked
+                {
+                    this.playCount += count;
+                }
+            }
+            catch (OverflowException) 
+            {
+                Console.WriteLine("Error Exception: Penambahan gagal karena overflow");
+            }
         }
         public void PrintTrackDetails()
         {
